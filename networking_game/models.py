@@ -42,10 +42,14 @@ class Player(BasePlayer):
     investment4 = models.IntegerField(blank=True, initial=0)
     investment4ag = models.IntegerField(blank=True, initial=0)
 
-    return1 = models.IntegerField(blank=True, initial=0) #amount returned to players 1 through n
-    return2 = models.IntegerField(blank=True, initial=0)
-    return3 = models.IntegerField(blank=True, initial=0)
-    return4 = models.IntegerField(blank=True, initial=0)
+    return1 = models.IntegerField(min=0, max= 100, blank=True, initial=0) #amount returned to players 1 through n
+    return2 = models.IntegerField(min=0, max= 100, blank=True, initial=0)
+    return3 = models.IntegerField(min=0, max= 100, blank=True, initial=0)
+    return4 = models.IntegerField(min=0, max= 100, blank=True, initial=0)
+    return_pts1 = models.FloatField(blank=True, initial=0) #amount returned to players 1 through n
+    return_pts2 = models.FloatField(blank=True, initial=0)
+    return_pts3 = models.FloatField(blank=True, initial=0)
+    return_pts4 = models.FloatField(blank=True, initial=0)
 
     investment_in_me_ag = models.IntegerField(blank=True, initial=0)
     #total amount invested in each player after multiplication. equals

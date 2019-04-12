@@ -2,16 +2,16 @@
 {% load otree %}
 
 {% block title %}
-    Enter your information
+    Enter Your Information
 {% endblock %}
 
 {% block content %}
 
-    <p>M: {{ player.endowment}}</p>
+    <p>Starting Money: {{ player.endowment}}</p>
 
-    <p>CP: {{player.cp}}</p>
+    <p>Multiplier: {{player.cp}}</p>
 
-    <p>Please enter the amount you promise to give back</p>
+    <p>Please enter the percent you promise to give back after multiplication</p>
 
     {% formfields %}
 

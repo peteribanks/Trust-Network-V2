@@ -26,11 +26,28 @@ class WaitPage2(WaitPage):
         player3 = self.group.get_player_by_role('player3')
         player4 = self.group.get_player_by_role('player4')
 
+
         player1.investment1 = (player1.endowment - player1.investment1 - player1.investment2 - player1.investment3 - player1.investment4)
         player2.investment2 = (player2.endowment - player2.investment1 - player2.investment2 - player2.investment3 - player2.investment4)
         player3.investment3 = (player3.endowment - player3.investment1 - player3.investment2 - player3.investment3 - player3.investment4)
         player4.investment4 = (player4.endowment - player4.investment1 - player4.investment2 - player4.investment3 - player4.investment4)
 
+
+class WaitPage3(WaitPage):
+    def after_all_players_arrive(self):
+        '''assigns the amount invested in self as the diffrence between endowment and amount invested'''
+        player1 = self.group.get_player_by_role('player1')
+        player2 = self.group.get_player_by_role('player2')
+        player3 = self.group.get_player_by_role('player3')
+        player4 = self.group.get_player_by_role('player4')
+
+        players = [player1, player2, player3, player4]
+
+        for player in players:
+            player.return_pts1 = ((player.investment1ag * player.return1) / 100)
+            player.return_pts2 = ((player.investment2ag * player.return2) / 100)
+            player.return_pts3 = ((player.investment3ag * player.return3) / 100)
+            player.return_pts4 = ((player.investment4ag * player.return4) / 100)
 
 class MyPageWaitPage(Page):
     '''this is only used on the first page to assign the multiplier and and starting money'''
@@ -79,6 +96,22 @@ class FinalPage(Page):
             string1 = 'p%snetworks' % (playernum)
             string2 = 'player%s' % (playernum)
             Final_Page_Var[string1] = self.player.network()[string2]
+
+        for player in players:
+            playernum = players.index(player) + 1
+            #since there are four players who each have return variables to each of the other players
+            #this defined the 16 return combonations
+            string1 = 'player%s_returnpts1' % (playernum)
+            string2 = 'player%s_returnpts2' % (playernum)
+            string3 = 'player%s_returnpts3' % (playernum)
+            string4 = 'player%s_returnpts4' % (playernum)
+
+            Final_Page_Var[string1] = player.return_pts1
+            Final_Page_Var[string2] = player.return_pts2
+            Final_Page_Var[string3] = player.return_pts3
+            Final_Page_Var[string4] = player.return_pts4
+
+
 
 
         return Final_Page_Var
@@ -191,22 +224,22 @@ class InvestmentReturn(Page):
             if playernum != 1 and player.investment1 != None:
                 player.investment1ag = player.investment1 * player1.cp
             else:
-                player.investment1 = player.investment1ag
+                player.investment1ag = player.investment1
 
             if playernum != 2 and player.investment2 != None:
                 player.investment2ag = player.investment2 * player2.cp
             else:
-                player.investment2 = player.investment2ag
+                player.investment2ag = player.investment2
 
             if playernum != 3 and player.investment3 != None:
                 player.investment3ag = player.investment3 * player3.cp
             else:
-                player.investment3 = player.investment3ag
+                player.investment3ag = player.investment3
 
             if playernum != 4 and player.investment4 != None:
                 player.investment4ag = player.investment4 * player4.cp
             else:
-                player.investment4 = player.investment4ag
+                player.investment4ag = player.investment4
 
             string1 = 'player%s_investment1ag' % (playernum)
             string2 = 'player%s_investment2ag' % (playernum)
@@ -263,6 +296,6 @@ page_sequence = [
     Invest,
     WaitPage2,
     InvestmentReturn,
-    WaitPage1,
+    WaitPage3,
     FinalPage
 ]
