@@ -25,13 +25,36 @@ class WaitPage2(WaitPage):
         player2 = self.group.get_player_by_role('player2')
         player3 = self.group.get_player_by_role('player3')
         player4 = self.group.get_player_by_role('player4')
-
+        players = [player1, player2, player3, player4]
 
         player1.investment1 = (player1.endowment - player1.investment1 - player1.investment2 - player1.investment3 - player1.investment4)
         player2.investment2 = (player2.endowment - player2.investment1 - player2.investment2 - player2.investment3 - player2.investment4)
         player3.investment3 = (player3.endowment - player3.investment1 - player3.investment2 - player3.investment3 - player3.investment4)
         player4.investment4 = (player4.endowment - player4.investment1 - player4.investment2 - player4.investment3 - player4.investment4)
 
+
+
+        for player in players:
+            playernum = players.index(player) + 1
+            if playernum != 1 and player.investment1 != None:
+                player.investment1ag = player.investment1 * player1.cp
+            else:
+                player.investment1ag = player.investment1
+
+            if playernum != 2 and player.investment2 != None:
+                player.investment2ag = player.investment2 * player2.cp
+            else:
+                player.investment2ag = player.investment2
+
+            if playernum != 3 and player.investment3 != None:
+                player.investment3ag = player.investment3 * player3.cp
+            else:
+                player.investment3ag = player.investment3
+
+            if playernum != 4 and player.investment4 != None:
+                player.investment4ag = player.investment4 * player4.cp
+            else:
+                player.investment4ag = player.investment4
 
 class WaitPage3(WaitPage):
     def after_all_players_arrive(self):
@@ -44,10 +67,31 @@ class WaitPage3(WaitPage):
         players = [player1, player2, player3, player4]
 
         for player in players:
-            player.return_pts1 = ((player.investment1ag * player.return1) / 100)
-            player.return_pts2 = ((player.investment2ag * player.return2) / 100)
-            player.return_pts3 = ((player.investment3ag * player.return3) / 100)
-            player.return_pts4 = ((player.investment4ag * player.return4) / 100)
+
+            if player == player1:
+                player.return_pts1 = 0
+                player.return_pts2 = ((player2.investment1ag * player.return2) / 100)
+                player.return_pts3 = ((player3.investment1ag * player.return3) / 100)
+                player.return_pts4 = ((player4.investment1ag * player.return4) / 100)
+
+            if player == player2:
+                player.return_pts1 = ((player1.investment2ag * player.return1) / 100)
+                player.return_pts2 = 0
+                player.return_pts3 = ((player3.investment2ag * player.return3) / 100)
+                player.return_pts4 = ((player4.investment2ag * player.return4) / 100)
+
+            if player == player3:
+                player.return_pts1 = ((player1.investment3ag * player.return1) / 100)
+                player.return_pts2 = ((player2.investment3ag * player.return2) / 100)
+                player.return_pts3 = 0
+                player.return_pts4 = ((player4.investment3ag * player.return4) / 100)
+
+            if player == player4:
+                player.return_pts1 = ((player1.investment4ag * player.return1) / 100)
+                player.return_pts2 = ((player2.investment4ag * player.return2) / 100)
+                player.return_pts3 = ((player3.investment4ag * player.return3) / 100)
+                player.return_pts4 = 0
+
 
 class MyPageWaitPage(Page):
     '''this is only used on the first page to assign the multiplier and and starting money'''
@@ -219,27 +263,7 @@ class InvestmentReturn(Page):
             Final_Page_Var[string3] = player.investment3
             Final_Page_Var[string4] = player.investment4
 
-        for player in players:
-            playernum = players.index(player) + 1
-            if playernum != 1 and player.investment1 != None:
-                player.investment1ag = player.investment1 * player1.cp
-            else:
-                player.investment1ag = player.investment1
 
-            if playernum != 2 and player.investment2 != None:
-                player.investment2ag = player.investment2 * player2.cp
-            else:
-                player.investment2ag = player.investment2
-
-            if playernum != 3 and player.investment3 != None:
-                player.investment3ag = player.investment3 * player3.cp
-            else:
-                player.investment3ag = player.investment3
-
-            if playernum != 4 and player.investment4 != None:
-                player.investment4ag = player.investment4 * player4.cp
-            else:
-                player.investment4ag = player.investment4
 
             string1 = 'player%s_investment1ag' % (playernum)
             string2 = 'player%s_investment2ag' % (playernum)
@@ -264,7 +288,7 @@ class InvestmentReturn(Page):
 
     def before_next_page(self):
         '''defines the players final money by taking the amount of money invest minus the amount given back'''
-        self.player.final_total_money = self.player.investment_in_me_ag - self.player.return1 - self.player.return2 - self.player.return3 - self.player.return4
+        self.player.final_total_money = self.player.investment_in_me_ag - self.player.return_pts1 - self.player.return_pts2 - self.player.return_pts3 - self.player.return_pts4
 
     def error_message(self, values):
         '''throws up an error message if the player is trying to return more money than they have'''
@@ -280,9 +304,6 @@ class InvestmentReturn(Page):
         return4 = values['return4']
         if return4 == None:
             return4 = 0
-
-        if return1 + return2 + return3 + return4 > self.player.investment_in_me_ag:
-            return 'You are trying to return too much money'
 
 
 

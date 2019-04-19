@@ -56,7 +56,7 @@
 
         {% endfor %}
 
-    In total you have {{player.final_total_money}}
+    In total you have {{player.final_total_money}} (this includes both money kept from endowment and from outside investment)
 
     {% elif player.id_in_group == 2 %}
 
@@ -111,7 +111,7 @@
 
         {% endfor %}
 
-    In total you have {{player.final_total_money}}
+    In total you have {{player.final_total_money}} (this includes both money kept from endowment and from outside investment)
 
     {% elif player.id_in_group == 3 %}
 
@@ -165,7 +165,7 @@
 
         {% endfor %}
 
-        In total you have {{player.final_total_money}}
+        In total you have {{player.final_total_money}} (this includes both money kept from endowment and from outside investment)
 
     {% elif player.id_in_group == 4 %}
 
@@ -220,7 +220,7 @@
 
         {% endfor %}
 
-        In total you have {{player.final_total_money}}
+        In total you have {{player.final_total_money}} (this includes both money kept from endowment and from outside investment)
 
     {% else %}
         you should not see this

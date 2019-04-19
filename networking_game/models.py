@@ -55,10 +55,10 @@ class Player(BasePlayer):
     #total amount invested in each player after multiplication. equals
     #investment1 for all players for player 1. this is used as an error checker for returning money to ensure that people done return more money than they are allowed to'''
 
-    final_total_money = models.IntegerField(blank=True, initial=0) #this is the amount of money left over after the player has returned'''
+    final_total_money = models.FloatField(blank=True, initial=0) #this is the amount of money left over after the player has returned'''
 
     def network(self):
-        network = {'player1': [2, 4], 'player2': [1, 3, 4], 'player3': [2, 4], 'player4': [1, 3, 2]}
+        network = {'player1': [2, 4], 'player2': [1, 3, 4], 'player3': [2, 4], 'player4': [1, 2, 3]}
         #'''this is the network if the key player1 has a list containing the
          #integers 1 and 4 it means they are networked with players 1 and four and so on'''
 
