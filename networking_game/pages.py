@@ -26,12 +26,18 @@ class WaitPage2(WaitPage):
         player3 = self.group.get_player_by_role('player3')
         player4 = self.group.get_player_by_role('player4')
         players = [player1, player2, player3, player4]
+        investments = [investment1,investment2, investment3, investment4 ]
 
         player1.investment1 = (player1.endowment - player1.investment1 - player1.investment2 - player1.investment3 - player1.investment4)
         player2.investment2 = (player2.endowment - player2.investment1 - player2.investment2 - player2.investment3 - player2.investment4)
         player3.investment3 = (player3.endowment - player3.investment1 - player3.investment2 - player3.investment3 - player3.investment4)
         player4.investment4 = (player4.endowment - player4.investment1 - player4.investment2 - player4.investment3 - player4.investment4)
 
+
+        for player in players:
+            for investment in investments:
+                if player.investment == None:
+                    player.investment = 0
 
 
         for player in players:
@@ -55,6 +61,8 @@ class WaitPage2(WaitPage):
                 player.investment4ag = player.investment4 * player4.cp
             else:
                 player.investment4ag = player.investment4
+
+
 
 class WaitPage3(WaitPage):
     def after_all_players_arrive(self):
@@ -200,18 +208,17 @@ class Invest(Page):
 
     def error_message(self, values):
         '''throws up an error if you try to invest more money than you have '''
+
         investment1 = values['investment1']
-        if investment1 == None:
-            investment1 = 0
         investment2 = values['investment2']
-        if investment2 == None:
-            investment2 = 0
         investment3 = values['investment3']
-        if investment3 == None:
-            investment3 = 0
         investment4 = values['investment4']
-        if investment4 == None:
-            investment4 = 0
+        investments = [investment1,investment2,investment3,investment4]
+
+        for investment in investments:
+            if investment == None:
+                investment = 0
+
 
         if investment1 + investment2 + investment3 + investment4 > self.player.endowment:
             return 'You invested more money than you have'

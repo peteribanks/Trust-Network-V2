@@ -33,13 +33,13 @@ class Player(BasePlayer):
     promise = models.IntegerField(min=0, max=100, initial=0) #percent that is promised as a return. This also ensures that the numebr will between 0 and 100
 
     #'''this is used to define the investments for the players'''
-    investment1 = models.IntegerField(blank=True, initial=0) #investment in player 1
+    investment1 = models.IntegerField(min=0, blank=True, initial=0) #investment in player 1
     investment1ag = models.IntegerField(blank=True, initial=0) #worth of investment in player 1 after it is multipleid by cp
-    investment2 = models.IntegerField(blank=True, initial=0) #same for each of the created players
+    investment2 = models.IntegerField(min=0,blank=True, initial=0) #same for each of the created players
     investment2ag = models.IntegerField(blank=True, initial=0)
-    investment3 = models.IntegerField(blank=True, initial=0)
+    investment3 = models.IntegerField(min=0,blank=True, initial=0)
     investment3ag = models.IntegerField(blank=True, initial=0)
-    investment4 = models.IntegerField(blank=True, initial=0)
+    investment4 = models.IntegerField(min=0,blank=True, initial=0)
     investment4ag = models.IntegerField(blank=True, initial=0)
 
     return1 = models.IntegerField(min=0, max= 100, blank=True, initial=0) #amount returned to players 1 through n
